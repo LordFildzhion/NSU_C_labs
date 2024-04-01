@@ -11,7 +11,7 @@ node **create_graph(short *n)
         graph[i]->it_to = 0;
         graph[i]->value = (short)(i + 1);
         graph[i]->visited = 0;
-        graph[i]->to = (char *) malloc((*n + 7) / 8 * sizeof(char));
+        graph[i]->to = (char *) malloc(*n * sizeof(char));
     }
     return graph;
 }
