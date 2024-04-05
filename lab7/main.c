@@ -1,12 +1,20 @@
 #include "graph/graph.h"
 
-int main() {
+int main()
+{
+    if (!freopen("in.txt", "r", stdin))
+        exit(EXIT_FAILURE);
 
-    short n;
-    int m;
-    node **graph = initialization(&n, &m);
+    if (!freopen("out.txt", "w", stdout))
+        exit(EXIT_FAILURE);
 
-    topological_sort(graph, &n);
+    uint16_t n;
+
+    node **graph = create_graph(&n);
+
+    initialization(graph, n);
+
+    topological_sort(graph, n);
 
     return 0;
 }

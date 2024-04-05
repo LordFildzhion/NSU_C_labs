@@ -1,111 +1,117 @@
 #include "graph.h"
 
-node *tops;
-node **create_graph(short *n)
+node **create_graph(uint16_t *n)
 {
-    tops = (node *) malloc(*n * sizeof(node));
-    node **graph = (node **) malloc(*n * sizeof(node*));
-    for (short i = 0; i < *n; i++)
+    int check_n;
+    if (scanf("%i", &check_n) != 1)
+        bad_number_of_lines();
+
+    if (!(0 <= check_n && check_n <= MAX_N))
+        bad_number_of_vertices();
+        
+    *n = check_n;
+    node **graph = (node **) malloc(sizeof(node *) * (*n));
+    for (uint16_t i = 0; i < *n; i++)
     {
-        graph[i] = &(tops[i]);
-        graph[i]->it_to = 0;
-        graph[i]->value = (short)(i + 1);
+        graph[i] = (node *) malloc(sizeof(node));
         graph[i]->visited = 0;
-        graph[i]->to = (char *) malloc(*n * sizeof(char));
+        graph[i]->to = (uint8_t *) malloc(sizeof(uint8_t) * ((*n + 7) / 8));
+        for (int j = 0; j < (*n + 7) / 8; j++)
+            graph[i]->to[j] = 0;
     }
     return graph;
 }
 
-void destroy_graph(node **graph, short *n)
+
+void delete_graph(node **graph, uint16_t n)
 {
-    for (int i = 0; i < *n; i++)
+    for (uint16_t i = 0; i < n ; i++)
+    {
         free(graph[i]->to);
-    free(tops);
+        free(graph[i]);
+    }
     free(graph);
 }
 
-short *ans, ans_it;
-char dfs(node *nd, node **graph)
+
+void initialization(node **graph, uint16_t n)
 {
-    if (nd->visited == 1)
-    {
-        printf("impossible to sort");
-        return 1;
-    }
-    if (nd->visited == 2)
-        return 0;
-    nd->visited = 1;
-
-    for (short i = 0; i < nd->it_to; i++)
-    {
-        if(dfs(graph[nd->to[i]], graph))
-            return 1;
-    }
-    nd->visited = 2;
-    ans[ans_it++] = nd->value;
-    return 0;
-}
-
-void topological_sort(node **graph, short *n)
-{
-    ans = (short *)malloc(*n * sizeof(short));
-    for (short i = 0; i < *n; i++)
-    {
-        if (graph[i]->visited == 0)
-            if (dfs(graph[i], graph))
-            {
-                destroy_graph(graph, n);
-                free(ans);
-                exit(EXIT_SUCCESS);
-            }
-    }
-    destroy_graph(graph, n);
-
-    for (short i = *n - 1; i >= 0; i--)
-        printf("%hu ", ans[i]);
-
-    free(ans);
-}
-
-node **initialization(short *n, int *m)
-{
-    if (!freopen("in.txt", "r", stdin))
-        exit(EXIT_FAILURE);
-
-    if (!freopen("out.txt", "w", stdout))
-        exit(EXIT_FAILURE);
-
-
-    if (scanf("%hi%i", n, m) != 2)
+    int m;
+    if (scanf("%i", &m) != 1)
         bad_number_of_lines();
 
-    if (!(0 <= *n && *n <= MAX_N))
-        bad_number_of_vertices();
-
-    if (!(0 <= *m && *m <= MAX_M(*n)))
+    if (!(0 <= m && m <= MAX_M(n)))
         bad_number_of_edges();
-
-    node **graph = create_graph(n);
-
-    for (int i = 0; i < *m; i++)
+    
+    while(m--)
     {
-        short to, from;
-        if (scanf("%hi%hi", &from, &to) != 2)
+        int to, from;
+
+        if (scanf("%i%i", &from, &to) != 2)
         {
-            destroy_graph(graph, n);
+            delete_graph(graph, n);
             bad_number_of_lines();
-            return NULL;
         }
 
-        if (!(1 <= to && to <= *n) || !(1 <= from && from <= *n))
+        if (!(1 <= to && to <= (int)n) || !(1 <= from && from <= (int)n))
         {
-            destroy_graph(graph, n);
+            delete_graph(graph, n);
             bad_vertex();
-            return NULL;
         }
+        
+        to--, from--;
+        graph[from]->to[to / 8] |= (1 << (to % 8));
+    }
+}
 
-        graph[from - 1]->to[graph[from - 1]->it_to++] = to - 1;
+bool dfs(node **graph, uint16_t n, uint16_t v, uint16_t *answer, uint16_t *answer_iterator)
+{
+    if (graph[v]->visited == 1)
+        return true;
+
+    if (graph[v]->visited == 2)
+        return false;
+
+    graph[v]->visited = 1;
+
+    for (uint8_t i = 0; i < (uint8_t)((n + 7) / 8); i++)
+    {
+        for (uint8_t j = 0; j < 8; j++)
+        {
+            if (graph[v]->to[i] & (1 << j))
+            {
+                if (dfs(graph, n, i * 8 + j, answer, answer_iterator))
+                    return true;
+            }
+        }
     }
 
-    return graph;
+    graph[v]->visited = 2;
+    answer[(*answer_iterator)++] = v + 1;
+
+    return false;
+}
+
+void topological_sort(node **graph, uint16_t n)
+{
+    uint16_t *answer = (uint16_t *) malloc(n * sizeof(uint16_t));
+    uint16_t answer_iterator = 0;
+
+    for (uint16_t i = 0; i < n; i++)
+    {
+        if (!graph[i]->visited && dfs(graph, n, i, answer, &answer_iterator))
+        {
+            printf("Impossible to sort");
+            delete_graph(graph, n);
+            free(answer);
+            exit(EXIT_SUCCESS);
+        }
+    }
+
+    for (uint16_t i = n - 1; i > 0; i--)
+        printf("%i ", (int)answer[i]);
+    printf("%i", (int)answer[0]);
+
+    delete_graph(graph, n);
+    free(answer);
 }

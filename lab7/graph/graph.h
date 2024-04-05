@@ -1,26 +1,22 @@
-#ifndef LAB7_GRAPH_H
-#define LAB7_GRAPH_H
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <inttypes.h>
 #include "../errors/errors.h"
 
+#define MAX_N (int32_t)2000
+#define MAX_M(x) (int32_t)(x * (x - 1) / 2)
 
-#define MAX_N (short)2000
-#define MAX_M(x) (int)(x * (x - 1) / 2)
+typedef struct Node
+{
+    uint8_t visited;
+    uint8_t *to;
+} node;
 
+node **create_graph(uint16_t *n);
 
-typedef struct node{
-    char visited; // 0 - not visited | 1 - visited, but don't out | 2 - visited and out
-    char *to;
-    short it_to;
-    short value;
-}node;
+void initialization(node **graph, uint16_t n);
 
-void destroy_graph(node **graph, short *n);
+void topological_sort(node **graph, uint16_t n);
 
-void topological_sort(node **graph, short *n);
-
-node **initialization(short *n, int *m);
-
-#endif
+void delete_graph(node **graph, uint16_t n);
