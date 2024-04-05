@@ -27,10 +27,16 @@ void delete_graph(node **graph, uint16_t n)
 {
     for (uint16_t i = 0; i < n ; i++)
     {
-        free(graph[i]->to);
-        free(graph[i]);
+        if (graph[i]->to)
+            free(graph[i]->to);
+        graph[i]->to = NULL;
+        if (graph[i])
+            free(graph[i]);
+        graph[i] = NULL;
     }
-    free(graph);
+    if (graph)
+        free(graph);
+    graph = NULL;
 }
 
 
