@@ -41,7 +41,6 @@ void delete_graph(node **graph, uint16_t n)
     graph = NULL;
 }
 
-
 void initialization(node **graph, uint16_t n)
 {
     int m;
