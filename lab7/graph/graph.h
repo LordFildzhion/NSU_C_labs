@@ -7,6 +7,12 @@
 #define MAX_N (int32_t)2000
 #define MAX_M(x) (int32_t)(x * (x - 1) / 2)
 
+enum codition{
+    NOT_VISITED,
+    VISITING,
+    VISITED
+};
+
 typedef struct Node
 {
     uint8_t visited;

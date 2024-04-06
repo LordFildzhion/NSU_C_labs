@@ -14,14 +14,14 @@ node **create_graph(uint16_t *n)
     for (uint16_t i = 0; i < *n; i++)
     {
         graph[i] = (node *) malloc(sizeof(node));
-        graph[i]->visited = 0;
+        graph[i]->visited = NOT_VISITED;
         graph[i]->to = (uint8_t *) malloc(sizeof(uint8_t) * ((*n + 7) / 8));
         for (int j = 0; j < (*n + 7) / 8; j++)
             graph[i]->to[j] = 0;
     }
+
     return graph;
 }
-
 
 void delete_graph(node **graph, uint16_t n)
 {
@@ -30,10 +30,12 @@ void delete_graph(node **graph, uint16_t n)
         if (graph[i]->to)
             free(graph[i]->to);
         graph[i]->to = NULL;
+
         if (graph[i])
             free(graph[i]);
         graph[i] = NULL;
     }
+
     if (graph)
         free(graph);
     graph = NULL;
@@ -70,29 +72,28 @@ void initialization(node **graph, uint16_t n)
     }
 }
 
+bool can_visited(node **graph, uint16_t v, uint16_t u)
+{
+    return (bool)(graph[v]->to[u / 8] & (1 << (u % 8)));
+}
+
 bool dfs(node **graph, uint16_t n, uint16_t v, uint16_t *answer, uint16_t *answer_iterator)
 {
-    if (graph[v]->visited == 1)
+    if (graph[v]->visited == VISITING)
         return true;
 
-    if (graph[v]->visited == 2)
+    if (graph[v]->visited == VISITED)
         return false;
 
-    graph[v]->visited = 1;
+    graph[v]->visited = VISITING;
 
-    for (uint8_t i = 0; i < (uint8_t)((n + 7) / 8); i++)
+    for (int16_t u = 0; u < n; u++)
     {
-        for (uint8_t j = 0; j < 8; j++)
-        {
-            if (graph[v]->to[i] & (1 << j))
-            {
-                if (dfs(graph, n, i * 8 + j, answer, answer_iterator))
-                    return true;
-            }
-        }
+        if (can_visited(graph, v, u) && dfs(graph, n, u, answer, answer_iterator))
+            return true;
     }
 
-    graph[v]->visited = 2;
+    graph[v]->visited = VISITED;
     answer[(*answer_iterator)++] = v + 1;
 
     return false;
