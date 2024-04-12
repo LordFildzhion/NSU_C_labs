@@ -2,20 +2,20 @@
 
 Realize the simple calculator
 
-Input:
+## Input:
 
-    A string of no more than 1000 characters
+*   A string of no more than 1000 characters
 
-Output:
+## Output:
 
-	If the input is not an integer arithmetic expression, then "Syntax error"
+*	If the input is not an integer arithmetic expression, then "Syntax error"
 
-	If the input is an integer arithmetic expression and its calculation results in division by 0, then "Division by zero"
+*	If the input is an integer arithmetic expression and its calculation results in division by 0, then "Division by zero"
 
-	Otherwise the meaning of the arithmetic expression
+*	Otherwise the meaning of the arithmetic expression
 
 
-```Example 1```
+## ```Example 1```
 
 Input:
 
@@ -25,16 +25,17 @@ Output:
 
     Syntax error
 
-```Example 2```
+## ```Example 2```
 
 Input:
     
     1/0
+
 Output:
 
     Division by zero
 
-```Example 3```
+## ```Example 3```
 
 Input:
     
@@ -44,7 +45,7 @@ Output:
 
     4
 
-```Example 4```
+## ```Example 4```
 
 Input:
     
@@ -52,10 +53,10 @@ Input:
 
 Output:
     
-    syntax error
+    Syntax error
 
 
-```Example 5```
+## ```Example 5```
 
 Input:
 
@@ -63,9 +64,9 @@ Input:
 
 Output:
     
-    syntax error
+    Syntax error
 
-```Example 6```
+## ```Example 6```
 
 Input:
 
@@ -73,9 +74,9 @@ Input:
 
 Output:
     
-    syntax error
+    Syntax error
 
-```Example 7```
+## ```Example 7```
 
 Input:
 
@@ -85,7 +86,7 @@ Output:
     
     2
 
-```Example 8```
+## ```Example 8```
 
 Input:
 
