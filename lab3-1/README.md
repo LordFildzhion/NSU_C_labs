@@ -1,8 +1,10 @@
-```Lab №6```
+# Quick sort
 
-Realize quick sort 
+Realize quick sort
 
-Input:
+**Time for sorting - 3 seconds.**
+
+## Input:
 
     Stirng №1: 
     Integer N in range from 0 to 2000000 - length of array
@@ -10,13 +12,13 @@ Input:
     String №2: 
     The array
 
-Output:
+## Output:
 
     Sorted array
     
-Time for sorting - 3 seconds.
 
-```Example 1```
+
+## ```Example 1```
 
 Input:
     
@@ -27,9 +29,10 @@ Output:
     
     -1 2 4
 
-```Example 2```
+## ```Example 2```
 
 Input:
+
     3
     0 0 -1
 

@@ -6,12 +6,6 @@
 ** Worst-case: O(N^2)
 ** Average-case: O(N log N)
 ** Best-case: O(N log N)
-**
-** Auxiliary Space:
-** Worst-case: O(N)
-** Average-case: O(log N)
-** Best-case: O(log N)
-**
 */
 
 #define MAXSIZE 2000000
