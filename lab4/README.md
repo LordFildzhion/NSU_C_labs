@@ -1,5 +1,7 @@
 ```Lab №7```
 
+Realize the simple calculator
+
 Input:
 
     A string of no more than 1000 characters
