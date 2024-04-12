@@ -4,17 +4,18 @@ Realize quick sort
 
 **Time for sorting - 3 seconds.**
 
-## Input:
+##  Input:
 
-    Stirng №1: 
-    Integer N in range from 0 to 2000000 - length of array
+*   Stirng №1:
 
-    String №2: 
-    The array
+    > Integer **N** in range from 0 to 2000000 - length of array
+
+*   String №2: 
+
+    > The array
 
 ## Output:
-
-    Sorted array
+> Sorted array
     
 
 
