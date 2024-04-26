@@ -15,7 +15,7 @@ int main()
 
     node **reversion_graph = reverse_graph(n, graph);
 
-    uint32_t *sort_origin = sort_vertexes(get_value(n, graph), n);
+    uint32_t *sort_origin = top_sort(n, graph);
 
     delete_graph(graph, n);
 

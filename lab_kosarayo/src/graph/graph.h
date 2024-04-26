@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../pair/pair.h"
 
 #define MAX_VERTEX 2000
 
@@ -30,9 +29,7 @@ void initialization(node **graph, uint32_t m);
 
 node **reverse_graph(uint32_t n, node **original_graph);
 
-uint32_t *sort_vertexes(uint32_t *values, uint32_t n);
-
-uint32_t *get_value(uint32_t n, node **graph);
+uint32_t *top_sort(uint32_t n, node **graph);
 
 void print_CSC(node **graph, uint32_t *vertexes, uint32_t n);
 

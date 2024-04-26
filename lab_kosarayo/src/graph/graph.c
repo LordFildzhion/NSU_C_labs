@@ -42,23 +42,6 @@ node **reverse_graph(uint32_t n, node **original_graph)
     return reversion_graph;
 }
 
-uint32_t *sort_vertexes(uint32_t *values, uint32_t n)
-{
-    pair_ui_32 *pairs = (pair_ui_32 *) malloc(sizeof(pair_ui_32) * n);
-    for (uint32_t i = 0; i < n; i++)
-        pairs[i] = make_pair(values[i], i);
-
-    quicksort(pairs, 0, n - 1);
-
-    uint32_t *answer = (uint32_t *) malloc(sizeof(uint32_t) * n);
-    for (uint32_t i = 0; i < n; i++)
-        answer[i] = pairs[i].b;
-
-    free(pairs);
-
-    return answer;
-}
-
 void sorting_dfs(node **graph, uint32_t n, uint32_t from, uint32_t *deep, uint32_t *p)
 {
     if (graph[from]->visited == VISITED)
@@ -67,31 +50,40 @@ void sorting_dfs(node **graph, uint32_t n, uint32_t from, uint32_t *deep, uint32
     graph[from]->visited = VISITED;
     
     for (int32_t to = 0; to < n; to++)
-    {
-        if (CAN_VISITED(graph, from, to) && graph[to]->visited == NOT_VISITED)
-        {
+        if (CAN_VISITED(graph, from, to))
             sorting_dfs(graph, n, to, deep, p);
-        }
-    }
-    deep[from] = (*p)++;
+
+    deep[(*p)++] = from;
 }
 
-uint32_t *get_value(uint32_t n, node **graph)
+void swap(uint32_t *a, uint32_t *b)
 {
+    uint32_t c = *a;
+    *a = *b;
+    *b = c;
+}
 
-    uint32_t *deep = (uint32_t *)malloc(sizeof(uint32_t) * n);
-    for (uint32_t i = 0; i < n; i++)
-        deep[i] = INT32_MAX;
-    
-    deep[0] = 0;
+void reverse(uint32_t *arr, uint32_t start, uint32_t end) {
+    while (start < end) {
+        swap(&arr[start], &arr[end]);
+        start++;
+        end--;
+    }
+}
+
+uint32_t *top_sort(uint32_t n, node **graph)
+{
+    uint32_t *vertexes = (uint32_t *)malloc(sizeof(uint32_t) * n);
 
     uint32_t p = 0;
 
     for (uint32_t i = 0; i < n; i++)
         if (graph[i]->visited == NOT_VISITED)
-            sorting_dfs(graph, n, i, deep, &p);
+            sorting_dfs(graph, n, i, vertexes, &p);
 
-    return deep;
+    reverse(vertexes, 0, n - 1);
+
+    return vertexes;
 }
 
 void print_dfs(node **graph, uint32_t n, uint32_t from, int32_t *condition, int32_t *cnds)
@@ -124,12 +116,14 @@ void print_CSC(node **graph, uint32_t *vertexes, uint32_t n)
             condition++;
         }
     }
+
     printf("%i\n", condition - 1);
     for (uint32_t j = 1; j <= condition; j++)
     {
         for (uint32_t i = 0; i < n; i++)
             if (cnds[i] == j)
                 printf("%i ", i + 1);
+
         printf("\n");
     }
 }
@@ -157,9 +151,11 @@ void print_graph(node **graph, uint32_t n)
     for (uint32_t i = 0; i < n; i++)
     {
         printf("%i: ", i);
+
         for (uint32_t j = 0; j < n; j++)
             if (CAN_VISITED(graph, i, j))
                 printf("%i ", j);
+
         printf("\n");
     }
 }
