@@ -9,7 +9,7 @@ Realize topological sort of graph
 ## Input
 *   String №1:
 
-    > Integer **N** from 0 to 1000 - quantity of vertex.
+    > Integer **N** from 0 to 2000 - quantity of vertex.
 
 *   String №2:
 
