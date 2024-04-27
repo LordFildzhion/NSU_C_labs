@@ -17,7 +17,7 @@ node **create_graph(uint32_t n)
     return graph;
 }
 
-void initialization(node **graph, uint32_t n, uint32_t m)
+bool initialization(node **graph, uint32_t n, uint32_t m)
 {
     for (uint32_t i = 0; i < m; i++)
     {
@@ -26,20 +26,22 @@ void initialization(node **graph, uint32_t n, uint32_t m)
         {
             delete_graph(graph, n);
             bad_number_of_lines();
-            exit(EXIT_SUCCESS);
+            return true;
         }
 
         if (!(1 <= from && from <= n) || !(1 <= to && to <= n))
         {
             delete_graph(graph, n);
             bad_vertex();
-            exit(EXIT_SUCCESS);
+            return true;
         }
 
         from--, to--;
 
         graph[from]->to[to / 8] |= (1 << (to % 8));
     }
+
+    return false;
 }
 
 node **reverse_graph(uint32_t n, node **original_graph)
