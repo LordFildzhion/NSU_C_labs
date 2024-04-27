@@ -17,12 +17,24 @@ node **create_graph(uint32_t n)
     return graph;
 }
 
-void initialization(node **graph, uint32_t m)
+void initialization(node **graph, uint32_t n, uint32_t m)
 {
     for (uint32_t i = 0; i < m; i++)
     {
         int32_t to, from;
-        scanf("%i%i", &from, &to);
+        if (scanf("%i%i", &from, &to) != 2)
+        {
+            delete_graph(graph, n);
+            bad_number_of_lines();
+            exit(EXIT_SUCCESS);
+        }
+
+        if (!(1 <= from && from <= n) || !(1 <= to && to <= n))
+        {
+            delete_graph(graph, n);
+            bad_vertex();
+            exit(EXIT_SUCCESS);
+        }
 
         from--, to--;
 

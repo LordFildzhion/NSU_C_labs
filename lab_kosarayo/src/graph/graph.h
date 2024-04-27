@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "../errors/errors.h"
+
 #define MAX_VERTEX 2000
 
 #define CAN_VISITED(graph, f, t) ((bool)(graph[f]->to[t / 8] & (1 << (t % 8))))
@@ -25,7 +27,7 @@ typedef struct Node
 
 node **create_graph(uint32_t n);
 
-void initialization(node **graph, uint32_t m);
+void initialization(node **graph, uint32_t n, uint32_t m);
 
 node **reverse_graph(uint32_t n, node **original_graph);
 
