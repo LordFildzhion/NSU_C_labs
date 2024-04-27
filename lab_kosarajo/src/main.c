@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "src/graph/graph.h"
+#include "graph/graph.h"
 
 int main()
 {
