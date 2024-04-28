@@ -23,18 +23,19 @@ int main()
     if (!(0 <= n && n <= MAX_VERTEX))
     {
         bad_number_of_vertices();
-        exit(EXIT_SUCCESS);
+        return 0;
     }
 
     if (!(0 <= m && m <= (n * (n - 1) / 2)))
     {   
         bad_number_of_edges();
-        exit(EXIT_SUCCESS);
+        return 0;
     }
 
     node **graph = create_graph(n);
 
-    initialization(graph, n, m);
+    if (initialization(graph, n, m))
+        return 0;
 
     node **reversion_graph = reverse_graph(n, graph);
 

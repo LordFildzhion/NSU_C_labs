@@ -27,7 +27,7 @@ typedef struct Node
 
 node **create_graph(uint32_t n);
 
-void initialization(node **graph, uint32_t n, uint32_t m);
+bool initialization(node **graph, uint32_t n, uint32_t m);
 
 node **reverse_graph(uint32_t n, node **original_graph);
 
