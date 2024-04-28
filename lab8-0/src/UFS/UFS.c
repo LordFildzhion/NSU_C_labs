@@ -21,11 +21,13 @@ void delete_UFS(ufs_node **UFS, uint16_t n)
     {
         if (UFS[i] != NULL)
             free(UFS[i]);
+
         UFS[i] = NULL;
     }
 
     if (UFS != NULL)
         free(UFS);
+
     UFS = NULL;
 }
 

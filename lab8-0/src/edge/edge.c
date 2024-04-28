@@ -13,51 +13,6 @@ void delete_edges(edge **edges, uint32_t m)
         free(edges);
 }
 
-void swap_edges(edge *a, edge *b)
-{
-    edge c = *a;
-    *a = *b;
-    *b = c;
-}
-
-edge *remove_min(edge **heap, uint32_t *heap_size)
-{
-    edge *res = heap[0];
-    uint32_t i = 0;
-    heap[0] = heap[--(*heap_size)];
-
-    while (1)
-    {
-        uint32_t j = i;
-
-        if (2 * i + 1 < *heap_size && heap[2 * i + 1]->length < heap[j]->length)
-            j = 2 * i + 1;
-
-        if (2 * i + 1 < *heap_size && heap[2 * i + 2]->length < heap[j]->length)
-            j = 2 * i + 2;
-
-        if (i == j)
-            break;
-
-        swap_edges(heap[i], heap[j]);
-    }
-
-    return res;
-}
-
-void insert(edge **heap, edge *element, uint32_t number)
-{
-    uint32_t i = number;
-    element->number = number;
-    heap[number] = element;
-
-    while (i > 0 && heap[i]->length < heap[(i - 1) / 2]->length)
-    {
-        swap_edges(heap[i], heap[(i - 1) / 2]);
-        i = (i - 1) / 2;
-    }
-}
-
 edge **scan_edges(uint16_t n, uint32_t m)
 {
     edge **edges = (edge **)malloc(sizeof(edge *) * m);
@@ -67,7 +22,7 @@ edge **scan_edges(uint16_t n, uint32_t m)
 
     for (uint32_t i = 0; i < m; i++)
     {
-        edge *e = (edge *)malloc(sizeof(edge));
+        edges[i] = (edge *)malloc(sizeof(edge));
 
         unsigned long long check_from, check_to, check_length;
 
@@ -92,12 +47,10 @@ edge **scan_edges(uint16_t n, uint32_t m)
             return NULL;
         }
 
-        e->use = false;
-        e->from = (uint16_t)check_from - 1;
-        e->to = (uint16_t)check_to - 1;
-        e->length = (uint32_t)check_length;
+        edges[i]->from = (uint16_t)check_from - 1;
+        edges[i]->to = (uint16_t)check_to - 1;
+        edges[i]->length = (uint32_t)check_length;
 
-        insert(edges, e, i);
     }
 
     return edges;

@@ -1,3 +1,7 @@
+#ifndef UFS_H
+#define UFS_H
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
@@ -18,3 +22,5 @@ uint16_t find(ufs_node **UFS, uint16_t x);
 bool same(ufs_node **UFS, uint16_t a, uint16_t b);
 
 void unite(ufs_node **UFS, uint16_t a, uint16_t b);
+
+#endif
