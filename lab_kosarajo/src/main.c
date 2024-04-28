@@ -17,7 +17,7 @@ int main()
     if (scanf("%i%i", &n, &m) != 2)
     {
         bad_number_of_lines();
-        exit(EXIT_SUCCESS);
+        return 0;
     }
 
     if (!(0 <= n && n <= MAX_VERTEX))
