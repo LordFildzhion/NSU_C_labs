@@ -3,17 +3,18 @@
 
 void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
 {
-    uint32_t answer_size = 0;
-    edge **answer = (edge **) malloc(sizeof(edge *) * m);
-
     bool key = false;
+
+    bool *ans = (bool *) malloc(sizeof(bool) * m);
+    for (uint32_t i = 0; i < m; i++)
+        ans[i] = false;
 
     for (uint32_t i = 0; i < m; i++)
     {
         if (!same(UFS, edges[i]->from, edges[i]->to))
         {
-            answer[answer_size++] = edges[i];
             unite(UFS, edges[i]->from, edges[i]->to);
+            ans[i] = true;
         }
 
         if (UFS[find(UFS, edges[i]->from)]->size == n)
@@ -24,13 +25,15 @@ void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
     }
 
     if (key)
-        for (uint32_t i = 0; i < answer_size; i++)
-            printf("%i %i\n", answer[i]->from + 1, answer[i]->to + 1);
+    {
+        for (uint32_t i = 0; i < m; i++)
+            if (ans[i])
+                printf("%i %i\n", edges[i]->from + 1, edges[i]->to + 1);
+    }
     else
         printf("No spanning tree\n");
-    
-    free(answer);
-    answer = NULL;
+
+    free(ans);
 }
 
 enum {MAX_N = 5000};
@@ -47,8 +50,8 @@ int main()
     if (!freopen("in.txt", "r", stdin))
         exit(EXIT_FAILURE);
 
-    /*if (!freopen("out.txt", "w", stdout))
-        exit(EXIT_FAILURE);*/
+    if (!freopen("out.txt", "w", stdout))
+        exit(EXIT_FAILURE);
 
     int16_t check_n;
     int32_t check_m;
