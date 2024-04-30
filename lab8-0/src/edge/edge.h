@@ -14,7 +14,7 @@ typedef struct Edge
     int32_t length;
 } edge;
 
-void delete_edges(edge **edges, edge *tops, uint32_t m);
+void delete_edges(edge **edges, edge *tops);
 
 edge **scan_edges(edge *tops, uint16_t n, uint32_t m);
 

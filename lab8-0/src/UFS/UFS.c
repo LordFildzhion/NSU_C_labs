@@ -1,12 +1,12 @@
 #include "UFS.h"
 
-ufs_node **create_UFS(uint16_t n)
+ufs_node **create_UFS(uint16_t n, ufs_node *ufs)
 {
     ufs_node **UFS = (ufs_node **)malloc(sizeof(ufs_node *) * n);
-
+    ufs = (ufs_node *) malloc(sizeof(ufs_node) * n);
     for (uint16_t i = 0; i < n; i++)
     {
-        UFS[i] = (ufs_node *)malloc(sizeof(ufs_node));
+        UFS[i] = &ufs[i];
 
         UFS[i]->link = i;
         UFS[i]->size = 1;
@@ -15,20 +15,13 @@ ufs_node **create_UFS(uint16_t n)
     return UFS;
 }
 
-void delete_UFS(ufs_node **UFS, uint16_t n)
+void delete_UFS(ufs_node **UFS, ufs_node *ufs)
 {
-    for (uint16_t i = 0; i < n; i++)
-    {
-        if (UFS[i] != NULL)
-            free(UFS[i]);
-
-        UFS[i] = NULL;
-    }
-
-    if (UFS != NULL)
-        free(UFS);
-
+    free(UFS);
     UFS = NULL;
+
+    free(ufs);
+    ufs = NULL;
 }
 
 uint16_t find(ufs_node **UFS, uint16_t x)

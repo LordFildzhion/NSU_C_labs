@@ -1,6 +1,6 @@
 #include "edge.h"
 
-void delete_edges(edge **edges, edge *tops, uint32_t m)
+void delete_edges(edge **edges, edge *tops)
 {
     free(edges);
     edges = NULL;
