@@ -3,9 +3,8 @@
 
 void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
 {
-    bool key = false;
 
-    bool *ans = (bool *) malloc(sizeof(bool) * m);
+    bool *ans = (bool *) malloc(sizeof(bool) * m), key = false;
     for (uint32_t i = 0; i < m; i++)
         ans[i] = false;
 
@@ -56,7 +55,7 @@ int main()
     int16_t check_n;
     int32_t check_m;
 
-    if (scanf("%i%i", &check_n, &check_m) < 2)
+    if (scanf("%hi%i", &check_n, &check_m) < 2)
     {
         printf("Bad number of lines\n");
         return 0;

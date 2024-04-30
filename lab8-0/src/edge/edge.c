@@ -22,10 +22,9 @@ edge **scan_edges(edge *tops, uint16_t n, uint32_t m)
     {
         edges[i] = &tops[i];
 
-        int check_from, check_to;
-        unsigned long long check_length;
+        unsigned long long check_length, check_from, check_to;
 
-        if (scanf("%i%i%llu", &check_from, &check_to, &check_length) < 3)
+        if (scanf("%llu%llu%llu", &check_from, &check_to, &check_length) < 3)
         {
             delete_edges(edges, tops);
             printf("Bad number of lines\n");
