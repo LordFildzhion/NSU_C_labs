@@ -1,41 +1,9 @@
 #include "UFS/UFS.h"
 #include "edge/edge.h"
 
-void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
-{
+void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m);
 
-    bool *ans = (bool *) malloc(sizeof(bool) * m), key = false;
-    for (uint32_t i = 0; i < m; i++)
-        ans[i] = false;
-
-    for (uint32_t i = 0; i < m; i++)
-    {
-        if (!same(UFS, edges[i]->from, edges[i]->to))
-        {
-            unite(UFS, edges[i]->from, edges[i]->to);
-            ans[i] = true;
-        }
-
-        if (UFS[find(UFS, edges[i]->from)]->size == n)
-        {
-            key = true;
-            break;
-        }
-    }
-
-    if (key)
-    {
-        for (uint32_t i = 0; i < m; i++)
-            if (ans[i])
-                printf("%i %i\n", edges[i]->from + 1, edges[i]->to + 1);
-    }
-    else
-        printf("No spanning tree\n");
-
-    free(ans);
-}
-
-enum {MAX_N = 5000};
+#define MAX_N 5000
 #define MAX_M(N) (N * (N + 1) / 2)
 
 int compare(const void *first, const void *second)
@@ -109,3 +77,38 @@ int main()
 }
 
 #undef MAX_M
+#undef MAX_N
+
+void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
+{
+
+    bool *ans = (bool *) malloc(sizeof(bool) * m), key = false;
+    for (uint32_t i = 0; i < m; i++)
+        ans[i] = false;
+
+    for (uint32_t i = 0; i < m; i++)
+    {
+        if (!same(UFS, edges[i]->from, edges[i]->to))
+        {
+            unite(UFS, edges[i]->from, edges[i]->to);
+            ans[i] = true;
+        }
+
+        if (UFS[find(UFS, edges[i]->from)]->size == n)
+        {
+            key = true;
+            break;
+        }
+    }
+
+    if (key)
+    {
+        for (uint32_t i = 0; i < m; i++)
+            if (ans[i])
+                printf("%i %i\n", edges[i]->from + 1, edges[i]->to + 1);
+    }
+    else
+        printf("No spanning tree\n");
+
+    free(ans);
+}
