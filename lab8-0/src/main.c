@@ -3,7 +3,7 @@
 
 void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
 {
-    uint32_t heap_size = m, answer_size = 0;
+    uint32_t answer_size = 0;
     edge **answer = (edge **) malloc(sizeof(edge *) * m);
 
     bool key = false;
@@ -33,9 +33,14 @@ void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
 enum {MAX_N = 5000};
 #define MAX_M(N) (N * (N + 1) / 2)
 
-int compare(const void *a, const void *b)
+int compare(const void *first, const void *second)
 {
-    return ((int64_t) (((edge *)b)->length) - (int64_t) (((edge *)a)->length));
+    edge *f = *(edge **)first, *s = *(edge **)second;
+
+    if (f->length < s->length)
+        return -1;
+
+    return (f->length > s->length);
 }
 
 int main()
@@ -80,19 +85,24 @@ int main()
     uint16_t n = (uint16_t)check_n;
     uint32_t m = (uint32_t)check_m;
 
-    ufs_node **UFS = create_UFS(n);
+    ufs_node *ufs = NULL;
+    ufs_node **UFS = create_UFS(n, ufs);
 
-    edge **edges;
+    edge *tops = NULL;
+    edge **edges = scan_edges(tops, n, m);
 
-    if ((edges = scan_edges(n, m)) == NULL)
+    if (edges == NULL)
     {
-        delete_UFS(UFS, n);
+        delete_UFS(UFS, ufs, n);
         return 0;
     }
 
-    qsort(edges, m, sizeof(edge *), compare);
+    qsort(edges, m, sizeof(edge*), compare);
 
     kruskal_algorithm(edges, UFS, n, m);
+
+    delete_edges(edges, tops, m);
+    delete_UFS(UFS, ufs, n);
 
     return 0;
 }

@@ -13,9 +13,9 @@ typedef struct UFS_Node
     uint16_t size;
 } ufs_node;
 
-ufs_node **create_UFS(uint16_t n);
+ufs_node **create_UFS(uint16_t n, ufs_node *ufs);
 
-void delete_UFS(ufs_node **UFS, uint16_t n);
+void delete_UFS(ufs_node **UFS, ufs_node *ufs, uint16_t n);
 
 uint16_t find(ufs_node **UFS, uint16_t x);
 
