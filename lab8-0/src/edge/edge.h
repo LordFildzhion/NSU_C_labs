@@ -1,6 +1,3 @@
-#ifndef EDGE_H
-#define EDGE_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
@@ -14,8 +11,7 @@ typedef struct Edge
     int32_t length;
 } edge;
 
-void delete_edges(edge **edges, edge *tops);
+void delete_edges(edge *edges);
 
-edge **scan_edges(edge *tops, uint16_t n, uint32_t m);
+edge *scan_edges(uint16_t n, uint32_t m);
 
-#endif 
