@@ -28,6 +28,9 @@ void kruskal_algorithm(edge **edges, ufs_node **UFS, uint16_t n, uint32_t m)
             printf("%i %i\n", answer[i]->from + 1, answer[i]->to + 1);
     else
         printf("No spanning tree\n");
+    
+    free(answer);
+    answer = NULL;
 }
 
 enum {MAX_N = 5000};
@@ -35,12 +38,7 @@ enum {MAX_N = 5000};
 
 int compare(const void *first, const void *second)
 {
-    edge *f = *(edge **)first, *s = *(edge **)second;
-
-    if (f->length < s->length)
-        return -1;
-
-    return (f->length > s->length);
+    return (*(edge **)first)->length - (*(edge **)second)->length;
 }
 
 int main()
@@ -49,10 +47,11 @@ int main()
     if (!freopen("in.txt", "r", stdin))
         exit(EXIT_FAILURE);
 
-    if (!freopen("out.txt", "w", stdout))
-        exit(EXIT_FAILURE);
+    /*if (!freopen("out.txt", "w", stdout))
+        exit(EXIT_FAILURE);*/
 
-    int32_t check_n, check_m;
+    int16_t check_n;
+    int32_t check_m;
 
     if (scanf("%i%i", &check_n, &check_m) < 2)
     {
@@ -65,10 +64,9 @@ int main()
         printf("No spanning tree\n");
         return 0;
     }
-    else if (check_m == 0)
-    {
+
+    if (check_m == 0)
         return 0;
-    }
 
     if (!(0 <= check_n && check_n <= MAX_N))
     {
@@ -93,7 +91,7 @@ int main()
 
     if (edges == NULL)
     {
-        delete_UFS(UFS, ufs, n);
+        delete_UFS(UFS, ufs);
         return 0;
     }
 
@@ -101,8 +99,9 @@ int main()
 
     kruskal_algorithm(edges, UFS, n, m);
 
-    delete_edges(edges, tops, m);
-    delete_UFS(UFS, ufs, n);
+    delete_edges(edges, tops);
+
+    delete_UFS(UFS, ufs);
 
     return 0;
 }

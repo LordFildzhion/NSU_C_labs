@@ -3,7 +3,9 @@
 ufs_node **create_UFS(uint16_t n, ufs_node *ufs)
 {
     ufs_node **UFS = (ufs_node **)malloc(sizeof(ufs_node *) * n);
+
     ufs = (ufs_node *) malloc(sizeof(ufs_node) * n);
+
     for (uint16_t i = 0; i < n; i++)
     {
         UFS[i] = &ufs[i];
@@ -17,11 +19,11 @@ ufs_node **create_UFS(uint16_t n, ufs_node *ufs)
 
 void delete_UFS(ufs_node **UFS, ufs_node *ufs)
 {
-    free(UFS);
-    UFS = NULL;
-
     free(ufs);
     ufs = NULL;
+
+    free(UFS);
+    UFS = NULL;
 }
 
 uint16_t find(ufs_node **UFS, uint16_t x)
