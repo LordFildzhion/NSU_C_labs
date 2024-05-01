@@ -25,14 +25,14 @@ bool initialization(node **graph, uint32_t n, uint32_t m)
         if (scanf("%i%i", &from, &to) != 2)
         {
             delete_graph(graph, n);
-            bad_number_of_lines();
+            printf("Bad number of lines\n");
             return true;
         }
 
         if (!(1 <= from && from <= n) || !(1 <= to && to <= n))
         {
             delete_graph(graph, n);
-            bad_vertex();
+            printf("Bad vertex\n");
             return true;
         }
 
@@ -158,18 +158,4 @@ void delete_graph(node **graph, uint32_t n)
     if (graph != NULL)
         free(graph);
     graph = NULL;
-}
-
-void print_graph(node **graph, uint32_t n)
-{
-    for (uint32_t i = 0; i < n; i++)
-    {
-        printf("%i: ", i);
-
-        for (uint32_t j = 0; j < n; j++)
-            if (CAN_VISITED(graph, i, j))
-                printf("%i ", j);
-
-        printf("\n");
-    }
 }

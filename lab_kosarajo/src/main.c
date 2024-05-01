@@ -4,6 +4,8 @@
 
 #include "graph/graph.h"
 
+bool checker(int32_t *n, int32_t *m);
+
 int main()
 {
     if (!freopen("in.txt", "r", stdin))
@@ -12,26 +14,11 @@ int main()
     if (!freopen("out.txt", "w", stdout))
         exit(EXIT_FAILURE);
 
-
     int32_t n, m;
-    if (scanf("%i%i", &n, &m) != 2)
-    {
-        bad_number_of_lines();
-        return 0;
-    }
 
-    if (!(0 <= n && n <= MAX_VERTEX))
-    {
-        bad_number_of_vertices();
+    if (checker(&n, &m))
         return 0;
-    }
-
-    if (!(0 <= m && m <= (n * (n - 1) / 2)))
-    {   
-        bad_number_of_edges();
-        return 0;
-    }
-
+    
     node **graph = create_graph(n);
 
     if (initialization(graph, n, m))
@@ -50,4 +37,27 @@ int main()
     free(sort_origin);
 
     return 0;
+}
+
+bool checker(int32_t *n, int32_t *m)
+{
+    if (scanf("%i%i", n, m) != 2)
+    {
+        printf("Bad number of lines\n");
+        return true;
+    }
+
+    if (!(0 <= *n && *n <= MAX_VERTEX))
+    {
+        printf("Bad number of vertices\n");
+        return true;
+    }
+
+    if (!(0 <= *m && *m <= (*n * (*n - 1) / 2)))
+    {   
+        printf("Bad number of edges\n");
+        return true;
+    }
+
+    return false;
 }
