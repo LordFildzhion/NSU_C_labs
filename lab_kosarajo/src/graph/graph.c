@@ -40,6 +40,8 @@ bool initialization(node **graph, uint32_t n, uint32_t m)
 
         graph[from]->to[to / 8] |= (1 << (to % 8));
     }
+
+    return false;
 }
 
 node **reverse_graph(uint32_t n, node **original_graph)
