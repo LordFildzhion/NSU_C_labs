@@ -21,14 +21,15 @@ bool initialization(node **graph, uint32_t n, uint32_t m)
 {
     for (uint32_t i = 0; i < m; i++)
     {
-        int32_t to, from;
-        if (scanf("%i%i", &from, &to) != 2)
+        int32_t check_to, check_from;
+        if (scanf("%i%i", &check_from, &check_to) != 2)
         {
             delete_graph(graph, n);
             printf("Bad number of lines\n");
             return true;
         }
-
+        
+        uint32_t to = (uint32_t)check_to, from = (uint32_t)check_from;
         if (!(1 <= from && from <= n) || !(1 <= to && to <= n))
         {
             delete_graph(graph, n);
@@ -63,7 +64,7 @@ void sorting_dfs(node **graph, uint32_t n, uint32_t from, uint32_t *deep, uint32
 
     graph[from]->visited = VISITED;
     
-    for (int32_t to = 0; to < n; to++)
+    for (uint32_t to = 0; to < n; to++)
         if (CAN_VISITED(graph, from, to))
             sorting_dfs(graph, n, to, deep, p);
 
@@ -119,10 +120,10 @@ void print_CSC(node **graph, uint32_t *vertexes, uint32_t n)
     int32_t condition = 1;
 
     int32_t *cnds = (int32_t *) malloc(sizeof(int32_t) * n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
         cnds[i] = -1;
 
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
         if (graph[vertexes[i]]->visited != VISITED)
         {
@@ -132,7 +133,7 @@ void print_CSC(node **graph, uint32_t *vertexes, uint32_t n)
     }
 
     printf("%i\n", condition - 1);
-    for (uint32_t j = 1; j <= condition; j++)
+    for (int32_t j = 1; j <= condition; j++)
     {
         for (uint32_t i = 0; i < n; i++)
             if (cnds[i] == j)
